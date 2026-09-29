@@ -1,0 +1,202 @@
+<!-- 
+  NarcoScan AI — Sample Test Image Generator v2
+  Open this file in your browser to download test images
+  Uses SOLID color fills for reliable detection
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NarcoScan Test Image Generator</title>
+  <style>
+    body { font-family: 'Inter', -apple-system, sans-serif; background: #F6F7F5; color: #202522; padding: 40px; }
+    h1 { color: #202522; font-size: 24px; font-weight: 600; margin-bottom: 6px; }
+    p { color: #626A64; font-size: 13px; line-height: 1.5; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 24px; }
+    .card { background: #FFFFFF; border: 1px solid #D9DEDA; border-radius: 8px; padding: 18px; text-align: center; box-shadow: 0 1px 3px rgba(32,37,34,0.06); }
+    .card h3 { margin: 10px 0 4px; font-size: 14px; font-weight: 600; color: #202522; }
+    .card p { font-size: 12px; color: #626A64; margin: 4px 0 12px; }
+    canvas { border-radius: 6px; border: 1px solid #D9DEDA; }
+    a.btn { display: inline-block; padding: 7px 16px; background: #285943; color: #FFFFFF; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px; margin-top: 6px; }
+    a.btn:hover { background: #1F4635; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; margin-bottom: 8px; font-family: monospace; }
+    .pos { background: #E4EEE8; color: #285943; border: 1px solid #B8D1C1; }
+    .neg { background: #EEF0ED; color: #53605A; border: 1px solid #D9DEDA; }
+    .inc { background: #F6EEDC; color: #8A641F; border: 1px solid #E3D1A8; }
+    .info { margin-top: 28px; padding: 20px; background: #FFFFFF; border-radius: 8px; border: 1px solid #D9DEDA; border-left: 3px solid #285943; }
+    .info h2 { color: #202522; font-size: 16px; font-weight: 600; margin-bottom: 12px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #D9DEDA; }
+    th { color: #626A64; font-weight: 500; text-transform: uppercase; font-size: 11px; letter-spacing: 0.4px; }
+  </style>
+</head>
+<body>
+  <h1>NarcoScan — Calibration & Test Reaction Images</h1>
+  <p>Reference colour images for prototype verification. Save each image to test against the presumptive analysis engine.</p>
+  <p style="color:#8A641F; font-size: 12px; margin-top: 4px;">Standardized colour fills are calibrated for central 40% sampling region analysis.</p>
+  
+  <div class="grid" id="grid"></div>
+
+  <div class="info">
+    <h2>📋 Test Scenarios — Copy-Paste Form Data</h2>
+    <table>
+      <tr>
+        <th>Scenario</th><th>Case ID</th><th>Reagent</th><th>Location</th><th>Image</th><th>Expected</th>
+      </tr>
+      <tr>
+        <td>1. Opiate</td><td>CASE-2026-0042</td><td>Marquis Reagent</td><td>NCB Field Lab, Delhi</td><td>Purple (Marquis)</td><td style="color:#24a148">Positive</td>
+      </tr>
+      <tr>
+        <td>2. Cocaine</td><td>CASE-2026-0089</td><td>Scott Reagent (Modified)</td><td>Mumbai Airport Lab</td><td>Blue (Scott)</td><td style="color:#24a148">Positive</td>
+      </tr>
+      <tr>
+        <td>3. Amphetamine</td><td>CASE-2026-0067</td><td>Marquis Reagent</td><td>Kolkata NCB Office</td><td>Orange (Marquis)</td><td style="color:#24a148">Positive</td>
+      </tr>
+      <tr>
+        <td>4. LSD</td><td>CASE-2026-0155</td><td>Ehrlich Reagent</td><td>Bangalore Lab</td><td>Pink (Ehrlich)</td><td style="color:#24a148">Positive</td>
+      </tr>
+      <tr>
+        <td>5. No reaction</td><td>CASE-2026-0103</td><td>Any reagent</td><td>Hyderabad FSL</td><td>White (No Reaction)</td><td style="color:#da1e28">Negative</td>
+      </tr>
+      <tr>
+        <td>6. Bad image</td><td>CASE-2026-0077</td><td>Mecke Reagent</td><td>Chennai Mobile Unit</td><td>Black (Too Dark)</td><td style="color:#f1c21b">Inconclusive</td>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    const images = [
+      {
+        name: 'test_purple_marquis',
+        title: '1. Marquis Positive (Purple)',
+        desc: 'Solid dark purple — simulates opiate positive reaction',
+        badge: 'pos', badgeText: 'Expected: POSITIVE',
+        draw: (ctx, w, h) => {
+          // Solid dark purple fill — the whole image
+          ctx.fillStyle = '#3b0764';
+          ctx.fillRect(0, 0, w, h);
+          // Slightly lighter center for realism
+          ctx.fillStyle = '#4c1d95';
+          ctx.beginPath();
+          ctx.arc(w/2, h/2, w*0.35, 0, Math.PI*2);
+          ctx.fill();
+        }
+      },
+      {
+        name: 'test_blue_scott',
+        title: '2. Scott Positive (Blue)',
+        desc: 'Solid bright blue — simulates cocaine positive reaction',
+        badge: 'pos', badgeText: 'Expected: POSITIVE',
+        draw: (ctx, w, h) => {
+          // Solid blue fill
+          ctx.fillStyle = '#1d4ed8';
+          ctx.fillRect(0, 0, w, h);
+          // Slightly different shade center
+          ctx.fillStyle = '#2563eb';
+          ctx.beginPath();
+          ctx.arc(w/2, h/2, w*0.35, 0, Math.PI*2);
+          ctx.fill();
+        }
+      },
+      {
+        name: 'test_orange_marquis',
+        title: '3. Marquis Positive (Orange)',
+        desc: 'Solid orange-brown — simulates amphetamine positive',
+        badge: 'pos', badgeText: 'Expected: POSITIVE',
+        draw: (ctx, w, h) => {
+          // Solid orange fill
+          ctx.fillStyle = '#b45309';
+          ctx.fillRect(0, 0, w, h);
+          ctx.fillStyle = '#d97706';
+          ctx.beginPath();
+          ctx.arc(w/2, h/2, w*0.35, 0, Math.PI*2);
+          ctx.fill();
+        }
+      },
+      {
+        name: 'test_pink_ehrlich',
+        title: '4. Ehrlich Positive (Pink/Purple)',
+        desc: 'Solid magenta-pink — simulates LSD/psilocybin positive',
+        badge: 'pos', badgeText: 'Expected: POSITIVE',
+        draw: (ctx, w, h) => {
+          // Solid magenta-pink fill
+          ctx.fillStyle = '#a21caf';
+          ctx.fillRect(0, 0, w, h);
+          ctx.fillStyle = '#c026d3';
+          ctx.beginPath();
+          ctx.arc(w/2, h/2, w*0.35, 0, Math.PI*2);
+          ctx.fill();
+        }
+      },
+      {
+        name: 'test_white_negative',
+        title: '5. No Reaction (White/Cream)',
+        desc: 'Light cream/white — no colour change, no reaction',
+        badge: 'neg', badgeText: 'Expected: NEGATIVE',
+        draw: (ctx, w, h) => {
+          // Very light, nearly white — no colour change
+          ctx.fillStyle = '#faf5ef';
+          ctx.fillRect(0, 0, w, h);
+          ctx.fillStyle = '#f5f0e8';
+          ctx.beginPath();
+          ctx.arc(w/2, h/2, w*0.35, 0, Math.PI*2);
+          ctx.fill();
+        }
+      },
+      {
+        name: 'test_black_dark',
+        title: '6. Too Dark (Quality Fail)',
+        desc: 'Nearly black image — triggers "too dark" quality check',
+        badge: 'inc', badgeText: 'Expected: INCONCLUSIVE',
+        draw: (ctx, w, h) => {
+          // Very dark image
+          ctx.fillStyle = '#0a0a0c';
+          ctx.fillRect(0, 0, w, h);
+          ctx.fillStyle = '#12121a';
+          ctx.beginPath();
+          ctx.arc(w/2, h/2, w*0.35, 0, Math.PI*2);
+          ctx.fill();
+        }
+      },
+    ];
+
+    const grid = document.getElementById('grid');
+    const SIZE = 300;
+
+    images.forEach(img => {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const canvas = document.createElement('canvas');
+      canvas.width = SIZE;
+      canvas.height = SIZE;
+      const ctx = canvas.getContext('2d');
+      img.draw(ctx, SIZE, SIZE);
+
+      const badge = document.createElement('span');
+      badge.className = 'badge ' + img.badge;
+      badge.textContent = img.badgeText;
+
+      const h3 = document.createElement('h3');
+      h3.textContent = img.title;
+
+      const p = document.createElement('p');
+      p.textContent = img.desc;
+
+      const a = document.createElement('a');
+      a.className = 'btn';
+      a.textContent = '⬇ Download';
+      a.download = img.name + '.png';
+      a.href = canvas.toDataURL('image/png');
+
+      card.appendChild(canvas);
+      card.appendChild(document.createElement('br'));
+      card.appendChild(badge);
+      card.appendChild(h3);
+      card.appendChild(p);
+      card.appendChild(a);
+      grid.appendChild(card);
+    });
+  </script>
+</body>
+</html>
