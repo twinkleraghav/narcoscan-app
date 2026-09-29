@@ -1011,7 +1011,7 @@ export default function NewTest() {
 
                 {/* Statutory Attestation Declaration */}
                 <div style={{ marginTop: '14px', padding: '10px 12px', background: 'var(--bg-secondary)', borderRadius: 'var(--radius-btn)', border: '1px solid var(--border-default)', fontSize: '11px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
-                  <strong>Digital Certificate Attestation:</strong> Certified that this electronic record was generated at the scene of seizure using the NarcoScan AI automated optical extraction system. The computed SHA-256 cryptographic digest guarantees zero post-seizure alteration in accordance with Section 63 of the Bharatiya Sakshya Adhiniyam, 2023.
+                  <strong>Digital Certificate Attestation:</strong> Certified that this electronic record was generated at the scene of seizure using the NarcoScan automated optical extraction system. The computed SHA-256 cryptographic digest guarantees zero post-seizure alteration in accordance with Section 63 of the Bharatiya Sakshya Adhiniyam, 2023.
                 </div>
               </div>
             ) : (
